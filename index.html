@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="
+https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
+"></script>
+		<title>Header con Tailwind CSS</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script
+			src="https://kit.fontawesome.com/96cdc70ae5.js"
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<body class="bg-slate-100">
+		<script src="data.js"></script>
+		<!-- ===============================
+                HEADER
+        ==================== -->
+		<header>
+			<nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+				<div class="flex items-center flex-shrink-0 text-white mr-6">
+					<i class="fas fa-wallet mr-2 text-white" aria-hidden="true"></i>
+					<span class="font-semibold text-xl tracking-tight">AhorrADAs</span>
+				</div>
+				<div class="block lg:hidden">
+					<button
+						id="botonMenu"
+						class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
+					>
+						<svg
+							class="fill-current h-3 w-3"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<title>Menu</title>
+							<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+						</svg>
+					</button>
+				</div>
+				<div
+					id="menu"
+					class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden"
+				>
+					<div class="text-sm lg:flex-grow">
+						<!-- Elementos <a> del lado derecho -->
+						<a
+							class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+							href="#responsive-header"
+							id="btnBalance"
+						>
+							<i class="fa-solid fa-tag"></i>
+							Balance
+						</a>
+						<a
+							href="#responsive-header"
+							class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+							id="btnCategorias"
+						>
+							<i class="fa-solid fa-tag"></i>
+							Categorías
+						</a>
+						<a
+							href="#responsive-header"
+							class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
+							id="reportesbtn"
+						>
+							<i class="fa-solid fa-chart-pie"></i>
+							Reportes
+						</a>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<button class="block sm:hidden">
+			<svg
+				class="fill-current h-6 w-6 text-white"
+				viewBox="0 0 20 20"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<title>Menu</title>
+				<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z"></path>
+			</svg>
+		</button>
+		<!--  F I N   D E  H E A D E R -->
+
+		<!-- ===============================
+                 N U E V A    O P E R A C I O N 
+            ==================== -->
+
+		<div
+			class="container mx-auto px-4 py-4 lg:w-3/5 max-w-4xl hidden"
+			id="ContenedorOperacionNueva"
+		>
+			<form
+				class="bg-white shadow-md rounded px-6 pt-6 pb-8 mb-4"
+				id="formGift"
+			>
+				<div class="mb-4">
+					<h2 class="font-bold text-2xl">Nueva operación</h2>
+					<label
+						class="block text-gray-700 text-sm font-bold mb-2"
+						for="description"
+					>
+						Descripción
+					</label>
+					<input
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						id="description"
+						type="text"
+					/>
+				</div>
+				<div class="mb-4">
+					<label
+						class="block text-gray-700 text-sm font-bold mb-2"
+						for="amount"
+					>
+						Monto
+					</label>
+					<input
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						id="amount"
+						type="number"
+						value="0"
+					/>
+				</div>
+				<div class="mb-4">
+					<label class="block text-gray-700 text-sm font-bold mb-2" for="type">
+						Tipo
+					</label>
+					<input
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						id="type"
+						type="text"
+						value="Ganancia"
+					/>
+				</div>
+				<div class="mb-4">
+					<label
+						class="block text-gray-700 text-sm font-bold mb-2"
+						for="category"
+					>
+						Categoría
+					</label>
+					<input
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						id="category"
+						type="text"
+						value="Servicios"
+					/>
+				</div>
+				<div class="mb-6">
+					<label class="block text-gray-700 text-sm font-bold mb-2" for="date">
+						Fecha
+					</label>
+					<input
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						id="date"
+						type="date"
+						value="2024-02-27"
+					/>
+				</div>
+				<div class="flex items-center justify-between">
+					<button
+						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						type="button"
+						id="cerrarOperacion"
+					>
+						Cancelar
+					</button>
+					<button
+						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+						type="button"
+						id="agregarOperacion"
+					>
+						Agregar
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<!-- ===============================
+              F I N  D E   N U E V A  O P E R A C I O N  
+            ==================== -->
+
+		<!-- ===============================
+            C O N T E N E D O R  DE 
+            F I L T E R // B A L A N C E
+            ==================== -->
+
+		<div
+			class="container2 max-w-4xl mx-auto px-4 py-8 block"
+			id="contendor_fbo"
+		>
+			<div class="grid lg:grid-cols-2 gap-4">
+				<!-- ===============================
+                   B A L A N C E
+            ==================== -->
+
+				<div class="lg:col-span-0">
+					<!-- Balance Section -->
+					<div class="bg-white shadow-md p-4 rounded-lg mb-4">
+						<h2 class="text-2xl font-bold mb-2">Balance</h2>
+						<div class="flex justify-between">
+							<p class="text-gray-600">Ganancia</p>
+							<p class="text-green-500 font-semibold">+ $0</p>
+						</div>
+						<div class="flex justify-between">
+							<p class="text-gray-600">Gastos</p>
+							<p class="text-red-500 font-semibold">- $0</p>
+						</div>
+						<div class="flex justify-between">
+							<p class="text-gray-600">Total</p>
+							<p class="font-semibold">$0</p>
+						</div>
+					</div>
+
+					<!-- ===============================
+                   F I L T E R
+            ==================== -->
+					<div class="bg-white shadow-md p-4 rounded-lg">
+						<div class="flex justify-between items-center mb-2">
+							<h2 class="text-2xl font-bold">Filtros</h2>
+							<a href="javascript:void(0)" id="miBoton" class="text-blue-500"
+								>Ocultar Filtros</a
+							>
+						</div>
+						<div class="block" id="miDiv">
+							<div class="flex flex-col gap-2">
+								<label class="text-sm font-medium" for="filtros-selec"
+									>Tipo</label
+								>
+								<select
+									name=""
+									id="filtros-selec"
+									class="p-2 border border-gray-300 rounded-md"
+								>
+									<option value="TODOS" selected>Todos</option>
+									<option value="GASTO">Gasto</option>
+									<option value="GANANCIA">Ganancia</option>
+								</select>
+							</div>
+							<div class="flex flex-col gap-2">
+								<label class="text-sm font-medium" for="filtro-cate"
+									>Categoría</label
+								>
+								<select
+									name="type"
+									id="filtro-cate"
+									class="p-2 border border-gray-300 rounded-md"
+								>
+									<option value="Todas">Todas</option>
+									<option value="Comida">Comida</option>
+									<option value="Servicios">Servicios</option>
+									<option value="Educación">Educación</option>
+									<option value="Transporte">Transporte</option>
+									<option value="Trabajo">Trabajo</option>
+									<option value="Otros">Otros</option>
+								</select>
+							</div>
+							<div class="flex flex-col gap-2">
+								<label class="text-sm font-medium" for="fecha-date"
+									>Desde</label
+								>
+								<input
+									type="date"
+									name="start-date"
+									id="start-date"
+									value="2024-02-13"
+									class="p-2 border border-gray-300 rounded-md max"
+									max="<?php echo date('Y-m-d'); ?>"
+								/>
+							</div>
+							<div class="flex flex-col gap-2">
+								<label class="text-sm font-medium" for="label"
+									>Ordenar por</label
+								>
+								<select
+									name="type"
+									id="ordenarPor"
+									class="p-2 border border-gray-300 rounded-md"
+								>
+									<option value="">Más reciente</option>
+									<option value="">Menos reciente</option>
+									<option value="">Mayor monto</option>
+									<option value="">Menor monto</option>
+									<option value="">A/Z</option>
+									<option value="">Z/A</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- ===============================
+                N U E V A  O P E R A C I O N E S
+            ==================== -->
+				<div class="bg-white shadow-md p-8 rounded-lg">
+					<div class="flex flex-col justify-between items-center mb-4">
+						<h2 class="text-2xl font-bold">Operaciones</h2>
+						<button
+							class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+							id="btnNuevaOperacion"
+						>
+							+ Nueva operación
+						</button>
+
+						<div class="contenedor-inferior flex justify-center">
+							<div class="ventas w-full max-w-4xl">
+								<!-- Encabezado de la tabla -->
+								<div class="encabezado flex justify-between items-center">
+									<h2 class="titulo-encabezado text-xl font-bold">Ventas</h2>
+									<button class="boton-general positivo px-4 py-2 rounded-md">
+										Nueva Venta
+									</button>
+								</div>
+								<!-- Contenido de la tabla -->
+								<div class="contenido mt-4">
+									<div class="overflow-x-auto">
+										<table class="w-full table-fixed">
+											<thead>
+												<tr class="bg-gray-200">
+													<th class="tabla-fecha py-2 px-4 text-left">
+														Descripción
+													</th>
+													<th class="tabla-vendedora py-2 px-4 text-left">
+														Categorias
+													</th>
+													<th class="tabla-sucursal py-2 px-4 text-left">
+														Fecha
+													</th>
+													<th class="tabla-componentes py-2 px-4 text-left">
+														Monto
+													</th>
+													<th class="tabla-acciones py-2 px-4 text-left">
+														Acciones
+													</th>
+												</tr>
+											</thead>
+											<tbody id="table-body">
+												<!-- Filas de datos -->
+
+												<!-- Puedes repetir esta fila para más datos -->
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class=""></div>
+
+					<!-- ===============================
+                F I N  D E N U E V A  O P E R A C I O N E S
+            ==================== -->
+				</div>
+			</div>
+		</div>
+		<!-- ===============================
+C A T E G O R I A S
+            ==================== -->
+		<div
+			class="container mx-auto px-4 py-4 lg:w-3/5 max-w-4xl hidden"
+			id="contenedor-categorias"
+		>
+			<div class="bg-white rounded-lg shadow-lg p-6">
+				<h2 class="text-2xl font-bold mb-6">Categoría</h2>
+				<label class="block mt-6" for="editar-categoria-input">Nombre</label>
+				<div class="mt-1 flex">
+					<input
+						class="form-input flex-1 border rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+						type="text"
+						name=""
+						id="editar-categoria-input"
+						placeholder="Escribe aquí..."
+					/>
+					<button
+						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+					>
+						Agregar
+					</button>
+				</div>
+				<div class="mt-6 overflow-x-auto">
+					<table class="w-full table-fixed">
+						<thead>
+							<tr class="bg-gray-200">
+								<th class="tabla-fecha py-2 px-4 text-left">ID</th>
+								<th class="tabla-vendedora py-2 px-4 text-left">Categorias</th>
+
+								<th class="tabla-acciones py-2 px-4 text-left">Acciones</th>
+							</tr>
+						</thead>
+						<tbody id="table-categoria">
+							<!-- Filas de datos -->
+
+							<!-- Puedes repetir esta fila para más datos -->
+						</tbody>
+					</table>
+				</div>
+
+				<!-- <div class="mt-6 space-x-4 flex justify-end" id="table-categoria">
+					 <div class="newCategoria">
+						<a href="javascript:void(0)" class="cursor-pointer"
+							><i
+								class="far fa-edit boton-editar text-blue-500 cursor-pointer"
+							></i
+						></a>
+						<a href="javascript:void(0)" class="cursor-pointer"
+							><i
+								class="far fa-trash-alt boton-eliminar text-red-500 cursor-pointer"
+							></i
+						></a>
+					</div></div>  -->
+			</div>
+		</div>
+
+		<script src="main.js"></script>
+	</body>
+</html>
