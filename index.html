@@ -368,54 +368,37 @@ C A T E G O R I A S
 		>
 			<div class="bg-white rounded-lg shadow-lg p-6">
 				<h2 class="text-2xl font-bold mb-6">Categoría</h2>
-				<label class="block mt-6" for="editar-categoria-input">Nombre</label>
-				<div class="mt-1 flex">
-					<input
-						class="form-input flex-1 border rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-						type="text"
-						name=""
-						id="editar-categoria-input"
-						placeholder="Escribe aquí..."
-					/>
-					<button
-						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
-					>
-						Agregar
-					</button>
-				</div>
-				<div class="mt-6 overflow-x-auto">
-					<table class="w-full table-fixed">
-						<thead>
-							<tr class="bg-gray-200">
-								<th class="tabla-fecha py-2 px-4 text-left">ID</th>
-								<th class="tabla-vendedora py-2 px-4 text-left">Categorias</th>
-
-								<th class="tabla-acciones py-2 px-4 text-left">Acciones</th>
-							</tr>
-						</thead>
-						<tbody id="table-categoria">
-							<!-- Filas de datos -->
-
-							<!-- Puedes repetir esta fila para más datos -->
-						</tbody>
-					</table>
-				</div>
-
-				<!-- <div class="mt-6 space-x-4 flex justify-end" id="table-categoria">
-					 <div class="newCategoria">
-						<a href="javascript:void(0)" class="cursor-pointer"
-							><i
-								class="far fa-edit boton-editar text-blue-500 cursor-pointer"
-							></i
-						></a>
-						<a href="javascript:void(0)" class="cursor-pointer"
-							><i
-								class="far fa-trash-alt boton-eliminar text-red-500 cursor-pointer"
-							></i
-						></a>
-					</div></div>  -->
+				<form action="">
+					<label class="block mt-6" for="editar-categoria-input">Nombre</label>
+					<div class="mt-1 flex">
+						<input
+							class="form-input flex-1 border rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+							type="text"
+							name=""
+							id="editar-categoria-input"
+							placeholder="Escribe aquí..."
+						/>
+						<button
+							class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+							id="agregar-categoria-btn"
+						>
+							Agregar
+						</button>
+					</div>
+					<div class="mt-6 overflow-x-auto">
+						<table class="w-full table-fixed">
+							<thead></thead>
+							<tbody id="table-categoria">
+								<!-- Filas de datos -->
+								<!-- Puedes repetir esta fila para más datos -->
+							</tbody>
+						</table>
+					</div>
+				</form>
 			</div>
 		</div>
+
+		<script src="dom.js"></script>
 
 		<script src="main.js"></script>
 	</body>
