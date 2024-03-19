@@ -193,3 +193,24 @@ document.getElementById("contenedor-categorias").classList.remove("hidden");
 cargarTabla(arrayCategorias);
 
 ////
+////
+const filtroCategoria = document.getElementById("filtro-cate");
+
+filtroCategoria.addEventListener("change", () => {
+	const categoriaSeleccionada = filtroCategoria.value;
+	const filasTabla = tablaBody.querySelectorAll("tr");
+
+	filasTabla.forEach((fila) => {
+		const nombreCategoria = fila.querySelector("td:nth-child(2)").textContent;
+
+		if (
+			categoriaSeleccionada === "Todas" ||
+			categoriaSeleccionada === nombreCategoria
+		) {
+			fila.style.display = "";
+		} else {
+			fila.style.display = "none";
+		}
+	});
+	console.log(filtroCategoria);
+});

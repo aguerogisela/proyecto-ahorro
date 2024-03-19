@@ -1,19 +1,27 @@
 const arrayCategorias = JSON.parse(localStorage.getItem("categorias")) || [
 	{
 		id: uuidv4(),
-		nombre: "Servicio",
+		nombre: "Comida",
 	},
 	{
 		id: uuidv4(),
-		nombre: "Educacion",
+		nombre: "Servicios",
 	},
 	{
 		id: uuidv4(),
-		nombre: "Deporte",
+		nombre: "Comida",
 	},
 	{
 		id: uuidv4(),
-		nombre: "Gustos",
+		nombre: "Educación",
+	},
+	{
+		id: uuidv4(),
+		nombre: "Transporte",
+	},
+	{
+		id: uuidv4(),
+		nombre: "Trabajo",
 	},
 ];
 console.log("arrayCategorias");
