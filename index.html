@@ -313,8 +313,17 @@ https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
 						>
 							+ Nueva operación
 						</button>
-
-						<div class="contenedor-inferior flex justify-center">
+						<div class="flex flex-col items-center pt-6 pb-8" id="imagenWallet">
+							<img src="wallet.svg" alt="" class="" />
+							<button class="p-2" id="mostrarOperaciones">
+								Ver tus operaciones
+							</button>
+						</div>
+						<div
+							class="contenedor-inferior flex justify-center"
+							id="contenedor-table-body"
+							style="display: none"
+						>
 							<div class="ventas w-full max-w-4xl">
 								<!-- Encabezado de la tabla -->
 								<div class="encabezado flex justify-between items-center">
@@ -357,11 +366,11 @@ https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
 							</div>
 						</div>
 					</div>
+				</div>
 
-					<!-- ===============================
+				<!-- ===============================
                 F I N  D E N U E V A  O P E R A C I O N E S
             ==================== -->
-				</div>
 			</div>
 		</div>
 		<!-- ===============================

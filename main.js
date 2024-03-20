@@ -13,9 +13,11 @@ const eventosEditarOperaciones = (elementos) => {
 			document.getElementById("date").value = operacion.fecha;
 			document.getElementById("amount").value = operacion.monto;
 
-			// Mostrar el contenedor de la nueva operación		ç
+			// Mostrar el contenedor de la nueva operación
+
 			contenedorOpNueva.classList.remove("hidden");
 		});
+
 		const eliminarEnlaceOp = document.getElementById(`eliminarOp-${idOp}`);
 		eliminarEnlaceOp.addEventListener("click", () => {
 			// Eliminar la operación
@@ -54,6 +56,7 @@ const generarTabla = (arrayOperaciones) => {
                 </td>
             </tr>`;
 	});
+
 	eventosEditarOperaciones(
 		document.querySelectorAll(".boton-editar-operacion")
 	);
