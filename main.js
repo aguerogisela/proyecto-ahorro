@@ -12,6 +12,9 @@ const eventosEditarOperaciones = (elementos) => {
 			document.getElementById("category").value = operacion.categoria;
 			document.getElementById("date").value = operacion.fecha;
 			document.getElementById("amount").value = operacion.monto;
+
+			// Mostrar el contenedor de la nueva operación		ç
+			contenedorOpNueva.classList.remove("hidden");
 		});
 		const eliminarEnlaceOp = document.getElementById(`eliminarOp-${idOp}`);
 		eliminarEnlaceOp.addEventListener("click", () => {
@@ -22,7 +25,7 @@ const eventosEditarOperaciones = (elementos) => {
 			// Volver a cargar la tabla
 			generarTabla(arrayOperaciones);
 
-			// Opcional: Guardar el array actualizado en el almacenamiento local
+			// Guardar el array actualizado en el almacenamiento local
 			localStorage.setItem("operaciones", JSON.stringify(arrayOperaciones));
 		});
 	});
@@ -36,12 +39,14 @@ const generarTabla = (arrayOperaciones) => {
 	tablaBody.innerHTML = "";
 	arrayOperaciones.forEach((operacion) => {
 		const { descripcion, categoria, fecha, monto, idOp } = operacion;
+		var colorClase = parseInt(monto) > 0 ? "text-green-500" : "text-red-500";
+
 		tablaBody.innerHTML += `
             <tr class="border-b border-gray-300">
                 <td class="py-2 px-4">${descripcion}</td>
                 <td class="py-2 px-4">${categoria}</td>
                 <td class="py-2 px-4">${fecha}</td>
-                <td class="py-2 px-4">${monto}</td>
+                <td class="py-2 px-4 ${colorClase}">${monto}</td>
                 <td class="py-2 px-4">
                     <a href="javascript:void(0)" class="boton-editar-operacion" dataOp-id="${idOp}">
                     <i class="far fa-edit boton-editar text-blue-500 cursor-pointer"></i></a>
@@ -214,3 +219,33 @@ filtroCategoria.addEventListener("change", () => {
 	});
 	console.log(filtroCategoria);
 });
+
+/////////////////
+const ordenarPorSelect = document.getElementById("ordenarPor");
+
+ordenarPorSelect.addEventListener("change", filtrarPorMonto);
+
+function filtrarPorMonto() {
+	const valorSeleccionado = ordenarPorSelect.value;
+
+	const filasTabla = document.querySelectorAll("#table-body tr");
+
+	filasTabla.forEach((fila) => {
+		const montoElement = fila.querySelector("td:nth-child(4)"); // Utilizar td:nth-child(4) para el cuarto td
+		if (montoElement) {
+			const monto = parseFloat(montoElement.textContent.replace("$", ""));
+
+			if (valorSeleccionado === "mayor_monto" && monto < 0) {
+				fila.style.display = "none";
+			} else if (valorSeleccionado === "menor_monto" && monto >= 0) {
+				fila.style.display = "none";
+			} else {
+				fila.style.display = "";
+			}
+		} else {
+			console.error(
+				"El elemento td:nth-child(4) no está presente en una fila."
+			);
+		}
+	});
+}

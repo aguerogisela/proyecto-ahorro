@@ -1,75 +1,54 @@
+// Función genérica para cambiar la visibilidad de un elemento
+const toggleVisibility = (elemento) => {
+	elemento.style.display =
+		elemento.style.display === "block" ? "none" : "block";
+};
+
+// Obtener referencias a los elementos del DOM
 const contenedorOpNueva = document.getElementById("ContenedorOperacionNueva");
-const abrirContenedorBtn = document.getElementById("btnNuevaOperacion");
 const contenedorGrande = document.getElementById("contendor_fbo");
 const contenedorCategorias = document.getElementById("contenedor-categorias");
+const cerrarOperacion = document.getElementById("cerrarOperacion");
 const btnCategorias = document.getElementById("btnCategorias");
 const btnBalance = document.getElementById("btnBalance");
-const cerrarOperacion = document.getElementById("cerrarOperacion");
-
-//Botones del dom, abrir cerrar
-//1. Falta menu hamburguesaconst boton = document.querySelector('#boton');
-
+const botonFiltro = document.getElementById("miBoton");
+const divFiltro = document.getElementById("miDiv");
 const menuBtn = document.getElementById("botonMenu");
 const menu = document.getElementById("menu");
+const abrirContenedorBtn = document.getElementById("btnNuevaOperacion");
 
+// Manejar el click en el botón del menú
 menuBtn.addEventListener("click", () => {
-	console.log("me diste click");
 	menu.classList.toggle("hidden");
 });
 
-// const menu = document.querySelector("#menu");
-
-// botonMenu.addEventListener("click", () => {
-// 	console.log("botonMenu");
-// 	menu.classList.toggle("hidden");
-// });
-
-//2.
-
+// Manejar el click en el botón de abrir/cerrar contenedor de nueva operación
 abrirContenedorBtn.addEventListener("click", () => {
-	if (contenedorOpNueva.style.display === "block") {
-		contenedorOpNueva.style.display = "none";
-		contenedorGrande.style.display = "block";
-	} else {
-		contenedorOpNueva.style.display = "block";
-		contenedorGrande.style.display = "none";
-	}
+	toggleVisibility(contenedorOpNueva);
+	toggleVisibility(contenedorGrande);
 });
 
+// Manejar el click en el botón de cerrar operación
 cerrarOperacion.addEventListener("click", () => {
-	if (contenedorOpNueva.style.display === "block") {
-		contenedorOpNueva.style.display = "none";
-		contenedorGrande.style.display = "block";
-	}
+	toggleVisibility(contenedorOpNueva);
+	toggleVisibility(contenedorGrande);
 });
 
+// Manejar el click en el botón de categorías
 btnCategorias.addEventListener("click", () => {
-	if (contenedorCategorias.style.display === "block") {
-		contenedorCategorias.style.display = "none";
-		contenedorGrande.style.display = "block";
-	} else {
-		contenedorCategorias.style.display = "block";
-		contenedorGrande.style.display = "none";
-	}
+	toggleVisibility(contenedorCategorias);
+	toggleVisibility(contenedorGrande);
 });
 
+// Manejar el click en el botón de balance
 btnBalance.addEventListener("click", () => {
 	contenedorCategorias.style.display = "none";
 	contenedorGrande.style.display = "block";
 });
 
-//FMOSTRAR FILTRO
-const boton = document.getElementById("miBoton");
-const div = document.getElementById("miDiv");
-
-// Agregar un evento de clic al botón
-boton.addEventListener("click", () => {
-	// Cambiar el estilo del div para mostrarlo o ocultarlo
-	if (div.style.display === "none") {
-		div.style.display = "block";
-		boton.innerText = "Ocultar Filtros";
-	} else {
-		div.style.display = "none";
-		boton.innerText = "Mostrar Filtros";
-	}
+// Manejar el click en el botón de filtro
+botonFiltro.addEventListener("click", () => {
+	toggleVisibility(divFiltro);
+	botonFiltro.innerText =
+		divFiltro.style.display === "none" ? "Mostrar Filtros" : "Ocultar Filtros";
 });
