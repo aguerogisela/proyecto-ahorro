@@ -200,12 +200,12 @@ https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
 			class="container2 max-w-4xl mx-auto px-4 py-8 block"
 			id="contendor_fbo"
 		>
-			<div class="grid lg:grid-cols-2 gap-4">
+			<div class="flex gap-4 flex-col lg:flex-row">
 				<!-- ===============================
                    B A L A N C E
             ==================== -->
 
-				<div class="lg:col-span-0">
+				<div class="lg:col-span-0 lg:w-3/5">
 					<!-- Balance Section -->
 					<div class="bg-white shadow-md p-4 rounded-lg mb-4">
 						<h2 class="text-2xl font-bold mb-2">Balance</h2>
@@ -320,54 +320,60 @@ https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
 							</button>
 						</div>
 						<div
-							class="contenedor-inferior flex justify-center"
+							class="contenedor-inferior flex justify-center m-6 lg:flex-col"
 							id="contenedor-table-body"
 							style="display: none"
 						>
 							<div class="ventas w-full max-w-4xl">
 								<!-- Encabezado de la tabla -->
-								<div class="encabezado flex justify-between items-center">
-									<h2 class="titulo-encabezado text-xl font-bold">Ventas</h2>
-									<button class="boton-general positivo px-4 py-2 rounded-md">
-										Nueva Venta
-									</button>
+								<div
+									class="encabezado flex justify-between items-center bg-gray-200 hidden lg:flex"
+								>
+									<div
+										class="px-6 py-3 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+										style="flex: 1"
+									>
+										Descripción
+									</div>
+									<div
+										class="px-6 py-3 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+										style="flex: 1"
+									>
+										Categorias
+									</div>
+									<div
+										class="px-6 py-3 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+										style="flex: 1"
+									>
+										Fecha
+									</div>
+									<div
+										class="px-6 py-3 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+										style="flex: 1"
+									>
+										Monto
+									</div>
+									<div
+										class="px-6 py-3 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+										style="flex: 1"
+									>
+										Acciones
+									</div>
 								</div>
 								<!-- Contenido de la tabla -->
-								<div class="contenido mt-4">
-									<div class="overflow-x-auto">
-										<table class="w-full table-fixed">
-											<thead>
-												<tr class="bg-gray-200">
-													<th class="tabla-fecha py-2 px-4 text-left">
-														Descripción
-													</th>
-													<th class="tabla-vendedora py-2 px-4 text-left">
-														Categorias
-													</th>
-													<th class="tabla-sucursal py-2 px-4 text-left">
-														Fecha
-													</th>
-													<th class="tabla-componentes py-2 px-4 text-left">
-														Monto
-													</th>
-													<th class="tabla-acciones py-2 px-4 text-left">
-														Acciones
-													</th>
-												</tr>
-											</thead>
-											<tbody id="table-body">
-												<!-- Filas de datos -->
-
-												<!-- Puedes repetir esta fila para más datos -->
-											</tbody>
-										</table>
+								<div class="contenido mt-4 overflow-x-auto">
+									<div
+										id="table-body"
+										class="bg-white divide-y divide-gray-200"
+									>
+										<!-- Filas de datos -->
+										<!-- Puedes repetir esta fila para más datos -->
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
 				<!-- ===============================
                 F I N  D E N U E V A  O P E R A C I O N E S
             ==================== -->
@@ -400,8 +406,17 @@ C A T E G O R I A S
 						</button>
 					</div>
 					<div class="mt-6 overflow-x-auto">
-						<table class="w-full table-fixed">
-							<thead></thead>
+						<table class="w-full table-fixed flex-1">
+							<thead>
+								<tr>
+									<th
+										class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+									>
+										Nombre
+									</th>
+									<th class="px-6 py-3 bg-gray-50"></th>
+								</tr>
+							</thead>
 							<tbody id="table-categoria">
 								<!-- Filas de datos -->
 								<!-- Puedes repetir esta fila para más datos -->

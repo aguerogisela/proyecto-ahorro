@@ -71,19 +71,20 @@ const generarTabla = (arrayOperaciones) => {
 		const { descripcion, categoria, fecha, monto, idOp } = operacion;
 		const colorClase = parseInt(monto) > 0 ? "text-green-500" : "text-red-500";
 
-		tablaBody.innerHTML += `
-            <tr class="border-b border-gray-300">
-                <td class="py-2 px-4">${descripcion}</td>
-                <td class="py-2 px-4">${categoria}</td>
-                <td class="py-2 px-4">${fecha}</td>
-                <td class="py-2 px-4 ${colorClase}">${monto}</td>
-
-                <td class="py-2 px-4">
-                    <a href="javascript:void(0)" class="boton-editar-operacion" dataOp-id="${idOp}">
-                    <i class="far fa-edit boton-editar text-blue-500 cursor-pointer"></i></a>
-                    <a href="javascript:void(0)" id="eliminarOp-${idOp}"><i class="far fa-trash-alt boton-eliminar text-red-500 cursor-pointer"></i></a>
-                </td>
-            </tr>`;
+		tablaBody.innerHTML += `   <div class="flex flex-wrap sm:flex-no-wrap space-x-1">
+    <div class="pl-4  font-bold px-2 py-1 whitespace-no-wrap text-sm leading-5 text-violet-700		 flex-1">${descripcion}</div>
+    <div class="pl-4 px-2 py-1  text-sm leading-5 text-gray-500 flex-1 text-fuchsia-400 font-bold">${categoria}</div>
+    <div class="pl-4 px-2 py-1  text-sm leading-5 text-gray-500 flex-1 hidden lg:flex">${fecha}</div>
+    <div class="pl-4 px-2 py-1 text-sm leading-5 ${colorClase} flex-1 font-bold">${monto}</div>
+    <div class="pl-4 px-2 py-1  text-sm leading-5 font-medium flex-1">
+        <a href="javascript:void(0)" class="text-indigo-600 hover:text-indigo-900 mr-2 boton-editar-operacion" dataOp-id="${idOp}">
+            <i class="far fa-edit"></i>
+        </a>
+        <a href="javascript:void(0)" id="eliminarOp-${idOp}" class="text-red-600 hover:text-red-900 boton-eliminar-operacion">
+            <i class="far fa-trash-alt"></i>
+        </a>
+    </div>
+</div>`;
 
 		// Sumar el monto a las ganancias o gastos dependiendo del tipo
 		if (parseFloat(monto) > 0) {
@@ -288,18 +289,17 @@ const cargarTabla = (data) => {
 	tablaCategoria.innerHTML = "";
 	data.forEach((categoria) => {
 		const { id, nombre } = categoria;
-		tablaCategoria.innerHTML += `<tr class="border-b border-gray-300">
-            <td class="py-2 px-4">${id}</td>
-            <td class="py-2 px-4">${nombre}</td>
-            <td class="py-2 px-4">
-                <a href="javascript:void(0)" class="boton-editar-categoria" data-id="${id}">
-                    <i class="far fa-edit text-blue-500 cursor-pointer"></i>
-                </a>
-                <a href="javascript:void(0)" id="eliminar-${id}">
-                    <i class="far fa-trash-alt text-red-500 cursor-pointer"></i>
-                </a>
-            </td>
-        </tr>`;
+		tablaCategoria.innerHTML += `<tr class="bg-white">
+                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">${nombre}</td>
+                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                    <a href="javascript:void(0)" class="text-indigo-600 hover:text-indigo-900 mr-4 boton-editar-categoria" data-id="${id}">
+                        <i class="far fa-edit"></i>
+                    </a>
+                    <a href="javascript:void(0)" id="eliminar-${id}" class="text-red-600 hover:text-red-900 boton-eliminar-categoria">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>`;
 	});
 	eventosEditarCategoria(document.querySelectorAll(".boton-editar-categoria"));
 };
