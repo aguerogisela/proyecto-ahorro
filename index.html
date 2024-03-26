@@ -211,15 +211,15 @@ https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
 						<h2 class="text-2xl font-bold mb-2">Balance</h2>
 						<div class="flex justify-between">
 							<p class="text-gray-600">Ganancia</p>
-							<p class="text-green-500 font-semibold">+ $0</p>
+							<p id="ganancia" class="text-green-500 font-semibold">+ $0</p>
 						</div>
 						<div class="flex justify-between">
 							<p class="text-gray-600">Gastos</p>
-							<p class="text-red-500 font-semibold">- $0</p>
+							<p id="gastos" class="text-red-500 font-semibold">- $0</p>
 						</div>
 						<div class="flex justify-between">
 							<p class="text-gray-600">Total</p>
-							<p class="font-semibold">$0</p>
+							<p id="total" class="font-semibold">$0</p>
 						</div>
 					</div>
 
@@ -411,6 +411,70 @@ C A T E G O R I A S
 				</form>
 			</div>
 		</div>
+
+		<!-- **************
+        Reportes
+        ************* -->
+		<div
+			class="container mx-auto px-4 py-4 lg:w-3/5 max-w-4xl hidden"
+			id="contenedor-reportes"
+		>
+			<div class="bg-white rounded-lg shadow-lg p-6">
+				<h2 class="text-2xl font-bold mb-6">Reportes</h2>
+				<div
+					class="flex flex-col items-center pt-6 pb-8"
+					id="sin-reportes"
+				></div>
+			</div>
+		</div>
+
+		<!-- **** FOOTER***** -->
+		<footer class="flex justify-center items-center flex-col bg-teal-700 py-10">
+			<!-- Navegación de Footer -->
+
+			<!-- Últimos Iconos -->
+			<nav class="flex justify-center mb-6">
+				<a href="https://github.com/aguerogisela" class="red-githubdos">
+					<span
+						class="flex justify-center items-center w-10 h-10 bg-white rounded-full text-teal-700 hover:bg-teal-700 hover:text-white"
+					>
+						<i class="fab fa-github-alt"></i>
+					</span>
+				</a>
+				<a
+					href="https://www.linkedin.com/in/gisela-belen-ag%C3%BCero-barriga-8b0351209/"
+					class="red-githubdos"
+				>
+					<span
+						class="flex justify-center items-center w-10 h-10 bg-white rounded-full text-teal-700 hover:bg-teal-700 hover:text-white"
+					>
+						<i class="fab fa-linkedin"></i>
+					</span>
+				</a>
+				<a href="https://www.behance.net/giselaagero1" class="red-githubdos">
+					<span
+						class="flex justify-center items-center w-10 h-10 bg-white rounded-full text-teal-700 hover:bg-teal-700 hover:text-white"
+					>
+						<i class="fab fa-behance"></i>
+					</span>
+				</a>
+				<a
+					href="mailto:aguerobel03@gmail.com?Subject=Hola%20Belen%20vi%20tu%20portfolio"
+					class="red-githubdos"
+				>
+					<span
+						class="flex justify-center items-center w-10 h-10 bg-white rounded-full text-teal-700 hover:bg-teal-700 hover:text-white"
+					>
+						<i class="far fa-envelope"></i>
+					</span>
+				</a>
+			</nav>
+
+			<!-- Saludo Final -->
+			<div class="saludo-final text-white">
+				<p>Hecho con amor 🩷 por Gisela</p>
+			</div>
+		</footer>
 		<script src="dom.js"></script>
 
 		<script src="main.js"></script>

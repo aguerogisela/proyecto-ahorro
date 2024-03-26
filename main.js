@@ -1,6 +1,10 @@
-//SECCION  OPERACIONES
-let operacionEditandoId = null;
+//**********  SECCION OPERACIONES **************
 
+// Variables globales
+let operacionEditandoId = null;
+let arrayOperaciones = JSON.parse(localStorage.getItem("operaciones")) || [];
+
+//// Funciones para manejar operaciones
 const eventosEditarOperaciones = (elementos) => {
 	elementos.forEach((elemento) => {
 		const idOp = elemento.getAttribute("dataOp-id");
@@ -17,6 +21,7 @@ const eventosEditarOperaciones = (elementos) => {
 
 			contenedorOpNueva.classList.remove("hidden");
 		});
+		// Código para eliminar una operación
 
 		const eliminarEnlaceOp = document.getElementById(`eliminarOp-${idOp}`);
 		eliminarEnlaceOp.addEventListener("click", () => {
@@ -32,16 +37,39 @@ const eventosEditarOperaciones = (elementos) => {
 		});
 	});
 };
+//*********** ELIMINAR  DEL ARRAY ***********/
 
-let arrayOperaciones = JSON.parse(localStorage.getItem("operaciones")) || [];
+// Actualiza la lógica al eliminar una operación
+const eliminarOperacion = (idOp) => {
+	// Encuentra la operación y obtén su categoría y monto
+	const operacion = arrayOperaciones.find((op) => op.idOp === idOp);
+	const categoria = operacion.categoria;
+	const monto = parseFloat(operacion.monto);
+
+	// Encuentra la categoría correspondiente y ajusta su gasto o ganancia
+	const categoriaIndex = arrayCategorias.findIndex(
+		(cat) => cat.nombre === categoria
+	);
+	if (monto < 0) {
+		arrayCategorias[categoriaIndex].gasto -= Math.abs(monto);
+	} else {
+		arrayCategorias[categoriaIndex].ganancia -= monto;
+	}
+
+	// Resto del código para eliminar la operación...
+};
+
+// Código para generar la tabla de operaciones
 const tablaBody = document.getElementById("table-body");
 
-// Función para generar la tabla con los datos existentes
 const generarTabla = (arrayOperaciones) => {
 	tablaBody.innerHTML = "";
+	let totalGanancias = 0;
+	let totalGastos = 0;
+
 	arrayOperaciones.forEach((operacion) => {
 		const { descripcion, categoria, fecha, monto, idOp } = operacion;
-		var colorClase = parseInt(monto) > 0 ? "text-green-500" : "text-red-500";
+		const colorClase = parseInt(monto) > 0 ? "text-green-500" : "text-red-500";
 
 		tablaBody.innerHTML += `
             <tr class="border-b border-gray-300">
@@ -49,18 +77,114 @@ const generarTabla = (arrayOperaciones) => {
                 <td class="py-2 px-4">${categoria}</td>
                 <td class="py-2 px-4">${fecha}</td>
                 <td class="py-2 px-4 ${colorClase}">${monto}</td>
+
                 <td class="py-2 px-4">
                     <a href="javascript:void(0)" class="boton-editar-operacion" dataOp-id="${idOp}">
                     <i class="far fa-edit boton-editar text-blue-500 cursor-pointer"></i></a>
                     <a href="javascript:void(0)" id="eliminarOp-${idOp}"><i class="far fa-trash-alt boton-eliminar text-red-500 cursor-pointer"></i></a>
                 </td>
             </tr>`;
+
+		// Sumar el monto a las ganancias o gastos dependiendo del tipo
+		if (parseFloat(monto) > 0) {
+			totalGanancias += parseFloat(monto);
+		} else {
+			totalGastos += parseFloat(monto);
+		}
 	});
 
 	eventosEditarOperaciones(
 		document.querySelectorAll(".boton-editar-operacion")
 	);
+
+	// Actualizar los elementos del balance con los totales calculados
+	const gananciasElement = document.getElementById("ganancia");
+	const gastosElement = document.getElementById("gastos");
+	const totalElement = document.getElementById("total");
+
+	gananciasElement.textContent = `+ $${totalGanancias.toFixed(2)}`;
+	gastosElement.textContent = `- $${Math.abs(totalGastos).toFixed(2)}`;
+	totalElement.textContent = `$${(totalGanancias + totalGastos).toFixed(2)}`;
+
+	// Mostrar los reportes
+	mostrarReportes(totalGanancias, totalGastos);
 };
+
+// Código para mostrar los reportes de ganancias y gastos por categoría
+const mostrarReportes = (totalGanancias, totalGastos) => {
+	// Crear un objeto para almacenar los totales por categoría
+	const totalesPorCategoria = {};
+
+	// Calcular los totales por categoría
+	arrayOperaciones.forEach((operacion) => {
+		const { categoria, monto } = operacion;
+		// Verificar si la categoría ya existe en el objeto, si no, inicializar los totales en 0
+		if (!totalesPorCategoria[categoria]) {
+			totalesPorCategoria[categoria] = { ganancia: 0, gasto: 0 };
+		}
+		// Sumar el monto de la operación al total correspondiente (ganancia o gasto) de la categoría
+		if (parseFloat(monto) > 0) {
+			totalesPorCategoria[categoria].ganancia += parseFloat(monto);
+		} else {
+			totalesPorCategoria[categoria].gasto += parseFloat(monto);
+		}
+	});
+
+	// Crear el HTML para mostrar los reportes por categoría
+	let reportesPorCategoriaHTML =
+		'<div class="bg-gray-100 rounded-lg shadow-lg p-6 mb-6">';
+	reportesPorCategoriaHTML +=
+		'<h2 class="text-xl font-bold mb-2">Reportes por categoría</h2>';
+	for (const categoria in totalesPorCategoria) {
+		const { ganancia, gasto } = totalesPorCategoria[categoria];
+		reportesPorCategoriaHTML += `
+            <div class="flex justify-between mb-2">
+                <p class="text-gray-600">${categoria}</p>
+                <div class="flex">
+                    <p class="mr-2">Ganancia:</p>
+                    <p class="${
+											ganancia >= 0 ? "text-green-500" : "text-red-500"
+										} font-semibold">${ganancia.toFixed(2)}</p>
+                    <p class="mx-2">Gasto:</p>
+                    <p class="${
+											gasto >= 0 ? "text-green-500" : "text-red-500"
+										} font-semibold">${Math.abs(gasto).toFixed(2)}</p>
+                </div>
+            </div>`;
+	}
+	reportesPorCategoriaHTML += "</div>";
+
+	// Mostrar los reportes por categoría
+	const contenedorReportes = document.getElementById("contenedor-reportes");
+	contenedorReportes.innerHTML = reportesPorCategoriaHTML;
+
+	// Mostrar también los totales generales
+	const balanceTotalHTML = `
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-2">Balance total</h2>
+            <div class="flex justify-between">
+                <p class="text-gray-600">Ganancia total</p>
+                <p class="text-green-500 font-semibold">+ $${totalGanancias.toFixed(
+									2
+								)}</p>
+            </div>
+            <div class="flex justify-between">
+                <p class="text-gray-600">Gasto total</p>
+                <p class="text-red-500 font-semibold">- $${Math.abs(
+									totalGastos
+								).toFixed(2)}</p>
+            </div>
+            <div class="flex justify-between">
+                <p class="text-gray-600">Balance total</p>
+                <p class="font-semibold">$${(
+									totalGanancias + totalGastos
+								).toFixed(2)}</p>
+            </div>
+        </div>`;
+	contenedorReportes.insertAdjacentHTML("beforeend", balanceTotalHTML);
+};
+
+// Código para agregar una nueva operación
 
 // Función para agregar una nueva operación
 const agregarOperacion = () => {
@@ -68,7 +192,18 @@ const agregarOperacion = () => {
 	const categoria = document.getElementById("category").value;
 	const fecha = document.getElementById("date").value;
 	const monto = document.getElementById("amount").value;
-	const idOp = uuidv4(); // Generar un ID único para la nueva operación
+	const tipo = document.getElementById("filtro-tipo").value;
+	const idOp = uuidv4();
+
+	// Actualiza el gasto o la ganancia de la categoría correspondiente
+	const categoriaIndex = arrayCategorias.findIndex(
+		(cat) => cat.nombre === categoria
+	);
+	if (tipo === "Gasto") {
+		arrayCategorias[categoriaIndex].gasto += parseFloat(monto);
+	} else {
+		arrayCategorias[categoriaIndex].ganancia += parseFloat(monto);
+	}
 
 	if (operacionEditandoId) {
 		const index = arrayOperaciones.findIndex(
@@ -78,7 +213,7 @@ const agregarOperacion = () => {
 			idOp: operacionEditandoId,
 			descripcion: descripcion,
 			categoria: categoria,
-			fecha: fecha,
+			fecha,
 			monto: monto,
 		};
 		operacionEditandoId = null;
@@ -86,9 +221,10 @@ const agregarOperacion = () => {
 		const nuevaOperacion = {
 			idOp: idOp,
 			descripcion: descripcion,
-			categoria: categoria,
-			fecha: fecha,
 			monto: monto,
+			categoria: categoria,
+			// tipo,
+			fecha: fecha,
 		};
 		arrayOperaciones.push(nuevaOperacion);
 	}
@@ -99,6 +235,7 @@ const agregarOperacion = () => {
 	document.getElementById("category").value = "";
 	document.getElementById("date").value = "";
 	document.getElementById("amount").value = "";
+
 	// Guardar los datos actualizados en el localStorage
 	localStorage.setItem("operaciones", JSON.stringify(arrayOperaciones));
 };
@@ -110,11 +247,13 @@ document
 
 // Generar la tabla al cargar la página
 generarTabla(arrayOperaciones);
-///SECCION CATEGORIA
 
-const tablaCategoria = document.getElementById("table-categoria");
+//******************  SECCION CATEGORÍA ********************
 
+// Variables globales
 let categoriaEditandoId = null;
+
+// Funciones para manejar categorías
 
 const eventosEditarCategoria = (elementos) => {
 	elementos.forEach((elemento) => {
@@ -142,6 +281,9 @@ const eventosEditarCategoria = (elementos) => {
 	});
 };
 
+// Código para cargar la tabla de categorías
+const tablaCategoria = document.getElementById("table-categoria");
+
 const cargarTabla = (data) => {
 	tablaCategoria.innerHTML = "";
 	data.forEach((categoria) => {
@@ -161,7 +303,8 @@ const cargarTabla = (data) => {
 	});
 	eventosEditarCategoria(document.querySelectorAll(".boton-editar-categoria"));
 };
-// Agregar Categoría: La función agregarCategoria toma el valor del campo de entrada y crea un nuevo objeto de categoría con un ID generado aleatoriamente. Luego, agrega esta nueva categoría al arrayCategorias, vuelve a cargar la tabla y guarda el arrayCategorias en el almacenamiento local.
+
+// Código para agregar una nueva categoría
 
 const agregarCategoria = () => {
 	const nombreCategoria = document.getElementById(
@@ -190,40 +333,15 @@ const agregarCategoria = () => {
 	localStorage.setItem("categorias", JSON.stringify(arrayCategorias));
 };
 
+// Event listeners y generación inicial de la tabla
 document
 	.getElementById("agregar-categoria-btn")
 	.addEventListener("click", agregarCategoria);
-
-// Mostrar el contenedor de categorías antes de cargar la tabla
-document.getElementById("contenedor-categorias").classList.remove("hidden");
-
-// Luego, cargar la tabla como lo haces actualmente
 cargarTabla(arrayCategorias);
 
-////
-////
-const filtroCategoria = document.getElementById("filtro-cate");
+// ***************** FILTROS **********************
 
-filtroCategoria.addEventListener("change", () => {
-	const categoriaSeleccionada = filtroCategoria.value;
-	const filasTabla = tablaBody.querySelectorAll("tr");
-
-	filasTabla.forEach((fila) => {
-		const nombreCategoria = fila.querySelector("td:nth-child(2)").textContent;
-
-		if (
-			categoriaSeleccionada === "Todas" ||
-			categoriaSeleccionada === nombreCategoria
-		) {
-			fila.style.display = "";
-		} else {
-			fila.style.display = "none";
-		}
-	});
-	console.log(filtroCategoria);
-});
-
-/////////////////
+//FILTRO MONTO
 const ordenarPorSelect = document.getElementById("ordenarPor");
 
 ordenarPorSelect.addEventListener("change", filtrarPorMonto);
@@ -252,3 +370,45 @@ function filtrarPorMonto() {
 		}
 	});
 }
+
+const filtroTipoSelect = document.getElementById("filtro-tipo");
+
+// Agregar evento de cambio al select
+filtroTipoSelect.addEventListener("change", function () {
+	// Obtener el valor seleccionado
+	const tipoSeleccionado = filtroTipoSelect.value;
+
+	// Obtener referencia al campo de monto
+	const montoInput = document.getElementById("amount");
+
+	// Asignar el valor adecuado al campo de monto
+	if (tipoSeleccionado === "Gasto") {
+		// Si se selecciona "Gasto", asignar un valor menor a 0
+		montoInput.value = "-0";
+	} else if (tipoSeleccionado === "Ganancia") {
+		// Si se selecciona "Ganancia", asignar un valor mayor a 0
+		montoInput.value = "0";
+	}
+});
+
+//FILTRO CATEGORIA
+const filtroCategoria = document.getElementById("filtro-cate");
+
+filtroCategoria.addEventListener("change", () => {
+	const categoriaSeleccionada = filtroCategoria.value;
+	const filasTabla = tablaBody.querySelectorAll("tr");
+
+	filasTabla.forEach((fila) => {
+		const nombreCategoria = fila.querySelector("td:nth-child(2)").textContent;
+
+		if (
+			categoriaSeleccionada === "Todas" ||
+			categoriaSeleccionada === nombreCategoria
+		) {
+			fila.style.display = "";
+		} else {
+			fila.style.display = "none";
+		}
+	});
+	console.log(filtroCategoria);
+});
