@@ -1,9 +1,8 @@
 //**********  SECCION OPERACIONES **************
-
-// Variables globales
 let operacionEditandoId = null;
 let arrayOperaciones = JSON.parse(localStorage.getItem("operaciones")) || [];
 
+console.log(arrayOperaciones);
 //// Funciones para manejar operaciones
 const eventosEditarOperaciones = (elementos) => {
 	elementos.forEach((elemento) => {
@@ -17,7 +16,7 @@ const eventosEditarOperaciones = (elementos) => {
 			document.getElementById("date").value = operacion.fecha;
 			document.getElementById("amount").value = operacion.monto;
 
-			// Mostrar el contenedor de la nueva operación
+			// Muestra el contenedor de la nueva operación
 
 			contenedorOpNueva.classList.remove("hidden");
 		});
@@ -37,6 +36,7 @@ const eventosEditarOperaciones = (elementos) => {
 		});
 	});
 };
+
 //*********** ELIMINAR  DEL ARRAY ***********/
 
 // Actualiza la lógica al eliminar una operación
@@ -113,17 +113,17 @@ const generarTabla = (arrayOperaciones) => {
 
 // Código para mostrar los reportes de ganancias y gastos por categoría
 const mostrarReportes = (totalGanancias, totalGastos) => {
-	// Crear un objeto para almacenar los totales por categoría
+	// objeto para almacenar los totales por categoría
 	const totalesPorCategoria = {};
 
-	// Calcular los totales por categoría
+	//  totales por categoría
 	arrayOperaciones.forEach((operacion) => {
 		const { categoria, monto } = operacion;
-		// Verificar si la categoría ya existe en el objeto, si no, inicializar los totales en 0
+		// Verifica si la categoría ya existe en el objeto, si no, inicializar los totales en 0
 		if (!totalesPorCategoria[categoria]) {
 			totalesPorCategoria[categoria] = { ganancia: 0, gasto: 0 };
 		}
-		// Sumar el monto de la operación al total correspondiente (ganancia o gasto) de la categoría
+		// Suma el monto de la operación al total correspondiente (ganancia o gasto) de la categoría
 		if (parseFloat(monto) > 0) {
 			totalesPorCategoria[categoria].ganancia += parseFloat(monto);
 		} else {
@@ -131,7 +131,7 @@ const mostrarReportes = (totalGanancias, totalGastos) => {
 		}
 	});
 
-	// Crear el HTML para mostrar los reportes por categoría
+	// mostrar los reportes por categoría
 	let reportesPorCategoriaHTML =
 		'<div class="bg-gray-100 rounded-lg shadow-lg p-6 mb-6">';
 	reportesPorCategoriaHTML +=
@@ -184,8 +184,6 @@ const mostrarReportes = (totalGanancias, totalGastos) => {
         </div>`;
 	contenedorReportes.insertAdjacentHTML("beforeend", balanceTotalHTML);
 };
-
-// Código para agregar una nueva operación
 
 // Función para agregar una nueva operación
 const agregarOperacion = () => {
@@ -312,7 +310,6 @@ const agregarCategoria = () => {
 	).value;
 
 	if (categoriaEditandoId) {
-		// Si hay un ID de categoría guardado, estamos editando una categoría existente
 		const index = arrayCategorias.findIndex(
 			(cat) => cat.id === categoriaEditandoId
 		);
@@ -349,10 +346,10 @@ ordenarPorSelect.addEventListener("change", filtrarPorMonto);
 function filtrarPorMonto() {
 	const valorSeleccionado = ordenarPorSelect.value;
 
-	const filasTabla = document.querySelectorAll("#table-body tr");
+	const filasTabla = document.querySelectorAll("#table-body div");
 
 	filasTabla.forEach((fila) => {
-		const montoElement = fila.querySelector("td:nth-child(4)"); // Utilizar td:nth-child(4) para el cuarto td
+		const montoElement = fila.querySelector("div:nth-child(4)"); // Utilizar td:nth-child(4) para el cuarto td
 		if (montoElement) {
 			const monto = parseFloat(montoElement.textContent.replace("$", ""));
 
@@ -363,10 +360,72 @@ function filtrarPorMonto() {
 			} else {
 				fila.style.display = "";
 			}
-		} else {
-			console.error(
-				"El elemento td:nth-child(4) no está presente en una fila."
-			);
+		}
+	});
+}
+
+function filtrarPorAZ() {
+	letraSeleccionada = ordenarPorSelect;
+	const filasTabla = document.querySelectorAll("#table-body div");
+
+	filasTabla.forEach((fila) => {
+		const descripcionElemento = fila.querySelector("div:nth-child(4)");
+		if (descripcionElemento) {
+			const descripcionEl = parseFloat(descripcionElemento.textContent);
+		}
+	});
+}
+
+////FILTRAR POR CATEGORIA
+
+const filtroCategoria = document.getElementById("filtro-cate");
+
+filtroCategoria.addEventListener("change", filtrarPorCategoria);
+
+function filtrarPorCategoria() {
+	const categoriaSeleccionada = filtroCategoria.value;
+
+	const filasTabla = document.querySelectorAll("#table-body div");
+
+	filasTabla.forEach((fila) => {
+		const categoriaElemento = fila.querySelector("div:nth-child(2)"); // Utilizar div:nth-child(2) para el segundo div
+		if (categoriaElemento) {
+			const categoria = categoriaElemento.textContent;
+
+			if (
+				categoriaSeleccionada !== "Todas" &&
+				categoria !== categoriaSeleccionada
+			) {
+				fila.style.display = "none";
+			} else {
+				fila.style.display = "";
+			}
+		}
+	});
+}
+
+const filtroTipo = document.getElementById("filtros-gasto");
+
+filtroTipo.addEventListener("change", filtroPorTipo);
+
+function filtroPorTipo() {
+	const filtroTipoSeleccionado = filtroTipo.value;
+
+	const filasTabla = document.querySelectorAll("#table-body div");
+
+	filasTabla.forEach((fila) => {
+		const tipoElemento = fila.querySelector("div:nth-child(1)"); // Utilizar div:nth-child(2) para el segundo div
+		if (tipoElemento) {
+			const tipo = tipoElemento.textContent;
+
+			if (
+				filtroTipoSeleccionado !== "Todos" &&
+				tipo !== filtroTipoSeleccionado
+			) {
+				fila.style.display = "none";
+			} else {
+				fila.style.display = "";
+			}
 		}
 	});
 }
@@ -392,23 +451,3 @@ filtroTipoSelect.addEventListener("change", function () {
 });
 
 //FILTRO CATEGORIA
-const filtroCategoria = document.getElementById("filtro-cate");
-
-filtroCategoria.addEventListener("change", () => {
-	const categoriaSeleccionada = filtroCategoria.value;
-	const filasTabla = tablaBody.querySelectorAll("tr");
-
-	filasTabla.forEach((fila) => {
-		const nombreCategoria = fila.querySelector("td:nth-child(2)").textContent;
-
-		if (
-			categoriaSeleccionada === "Todas" ||
-			categoriaSeleccionada === nombreCategoria
-		) {
-			fila.style.display = "";
-		} else {
-			fila.style.display = "none";
-		}
-	});
-	console.log(filtroCategoria);
-});

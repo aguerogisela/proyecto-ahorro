@@ -108,3 +108,7 @@ botonFiltro.addEventListener("click", () => {
 	botonFiltro.innerText =
 		divFiltro.style.display === "none" ? "Mostrar Filtros" : "Ocultar Filtros";
 });
+
+menuBtn.addEventListener("click", () => {
+	menu.classList.toggle("hidden");
+});
