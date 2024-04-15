@@ -239,7 +239,7 @@ https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
 									>Tipo</label
 								>
 								<select
-									name=""
+									name="tipo"
 									id="filtros-gasto"
 									class="p-2 border border-gray-300 rounded-md"
 								>
@@ -277,7 +277,6 @@ https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
 									id="start-date"
 									value="2024-02-13"
 									class="p-2 border border-gray-300 rounded-md max"
-									max="<?php echo date('Y-m-d'); ?>"
 								/>
 							</div>
 							<div class="flex flex-col gap-2">
@@ -353,7 +352,6 @@ https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
 									>
 										Monto
 									</div>
-
 									<div
 										class="px-6 py-3 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
 										style="flex: 1"
@@ -380,6 +378,7 @@ https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
             ==================== -->
 			</div>
 		</div>
+
 		<!-- ===============================
 C A T E G O R I A S
             ==================== -->
@@ -389,13 +388,13 @@ C A T E G O R I A S
 		>
 			<div class="bg-white rounded-lg shadow-lg p-6">
 				<h2 class="text-2xl font-bold mb-6">Categoría</h2>
-				<form action="">
+				<form>
 					<label class="block mt-6" for="editar-categoria-input">Nombre</label>
 					<div class="mt-1 flex">
 						<input
 							class="form-input flex-1 border rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 							type="text"
-							name=""
+							name="text"
 							id="editar-categoria-input"
 							placeholder="Escribe aquí..."
 						/>
@@ -441,6 +440,69 @@ C A T E G O R I A S
 					class="flex flex-col items-center pt-6 pb-8"
 					id="sin-reportes"
 				></div>
+			</div>
+		</div>
+		<!-- ***********MODAL DE Confirmación**************** -->
+
+		<div
+			id="myModal"
+			class="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-50 hidden"
+		>
+			<div class="bg-white rounded-lg shadow-lg p-6">
+				<div class="flex justify-between items-center">
+					<h2 class="text-lg font-semibold text-gray-800">Confirmación</h2>
+					<button id="cerrarModal" class="text-gray-500 hover:text-gray-700">
+						&times;
+					</button>
+				</div>
+				<p class="text-gray-700 mt-4">
+					¿Estás seguro de que deseas eliminar esta operación?
+				</p>
+				<div class="mt-6 flex justify-end">
+					<button
+						id="cancelarEliminar"
+						class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 focus:outline-none"
+					>
+						Cancelar
+					</button>
+					<button
+						id="confirmarEliminar"
+						class="px-4 py-2 bg-red-500 text-white rounded ml-4 hover:bg-red-600 focus:outline-none"
+					>
+						Eliminar
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div
+			id="myModalCat"
+			class="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-50 hidden"
+		>
+			<div class="bg-white rounded-lg shadow-lg p-6">
+				<div class="flex justify-between items-center">
+					<h2 class="text-lg font-semibold text-gray-800">Confirmación</h2>
+					<button id="cerrarModalCat" class="text-gray-500 hover:text-gray-700">
+						&times;
+					</button>
+				</div>
+				<p class="text-gray-700 mt-4">
+					¿Estás seguro de que deseas eliminar esta categoria?
+				</p>
+				<div class="mt-6 flex justify-end">
+					<button
+						id="cancelarEliminarCat"
+						class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 focus:outline-none"
+					>
+						Cancelar
+					</button>
+					<button
+						id="confirmarEliminarCat"
+						class="px-4 py-2 bg-red-500 text-white rounded ml-4 hover:bg-red-600 focus:outline-none"
+					>
+						Eliminar
+					</button>
+				</div>
 			</div>
 		</div>
 

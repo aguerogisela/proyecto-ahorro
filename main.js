@@ -20,43 +20,31 @@ const eventosEditarOperaciones = (elementos) => {
 
 			contenedorOpNueva.classList.remove("hidden");
 		});
-		// Código para eliminar una operación
+		//*********** ELIMINAR  DEL ARRAY ***********/
 
 		const eliminarEnlaceOp = document.getElementById(`eliminarOp-${idOp}`);
 		eliminarEnlaceOp.addEventListener("click", () => {
-			// Eliminar la operación
-			const index = arrayOperaciones.findIndex((op) => op.idOp === idOp);
-			arrayOperaciones.splice(index, 1);
+			const modal = document.getElementById("myModal");
+			modal.classList.remove("hidden");
 
-			// Volver a cargar la tabla
-			generarTabla(arrayOperaciones);
+			const confirmarEliminarBtn = document.getElementById("confirmarEliminar");
+			confirmarEliminarBtn.onclick = function () {
+				modal.classList.add("hidden");
 
-			// Guardar el array actualizado en el almacenamiento local
-			localStorage.setItem("operaciones", JSON.stringify(arrayOperaciones));
+				const index = arrayOperaciones.findIndex((op) => op.idOp === idOp);
+				arrayOperaciones.splice(index, 1);
+
+				generarTabla(arrayOperaciones);
+
+				localStorage.setItem("operaciones", JSON.stringify(arrayOperaciones));
+			};
+
+			const cancelarEliminarBtn = document.getElementById("cancelarEliminar");
+			cancelarEliminarBtn.onclick = function () {
+				modal.classList.add("hidden");
+			};
 		});
 	});
-};
-
-//*********** ELIMINAR  DEL ARRAY ***********/
-
-// Actualiza la lógica al eliminar una operación
-const eliminarOperacion = (idOp) => {
-	// Encuentra la operación y obtén su categoría y monto
-	const operacion = arrayOperaciones.find((op) => op.idOp === idOp);
-	const categoria = operacion.categoria;
-	const monto = parseFloat(operacion.monto);
-
-	// Encuentra la categoría correspondiente y ajusta su gasto o ganancia
-	const categoriaIndex = arrayCategorias.findIndex(
-		(cat) => cat.nombre === categoria
-	);
-	if (monto < 0) {
-		arrayCategorias[categoriaIndex].gasto -= Math.abs(monto);
-	} else {
-		arrayCategorias[categoriaIndex].ganancia -= monto;
-	}
-
-	// Resto del código para eliminar la operación...
 };
 
 // Código para generar la tabla de operaciones
@@ -267,15 +255,37 @@ const eventosEditarCategoria = (elementos) => {
 
 		const eliminarEnlace = document.getElementById(`eliminar-${id}`);
 		eliminarEnlace.addEventListener("click", () => {
-			// Eliminar la categoría
-			const index = arrayCategorias.findIndex((cat) => cat.id === id);
-			arrayCategorias.splice(index, 1);
+			// Mostrar la modal de confirmación
+			const modal = document.getElementById("myModalCat");
+			modal.classList.remove("hidden");
 
-			// Volver a cargar la tabla
-			cargarTabla(arrayCategorias);
+			// Asignar evento al botón de confirmar eliminar en la modal
+			const confirmarEliminarBtn = document.getElementById(
+				"confirmarEliminarCat"
+			);
+			confirmarEliminarBtn.onclick = function () {
+				// Ocultar la modal
+				modal.classList.add("hidden");
 
-			// Opcional: Guardar el array actualizado en el almacenamiento local
-			localStorage.setItem("categorias", JSON.stringify(arrayCategorias));
+				// Eliminar la categoría
+				const index = arrayCategorias.findIndex((cat) => cat.id === id);
+				arrayCategorias.splice(index, 1);
+
+				// Volver a cargar la tabla
+				cargarTabla(arrayCategorias);
+
+				// Opcional: Guardar el array actualizado en el almacenamiento local
+				localStorage.setItem("categorias", JSON.stringify(arrayCategorias));
+			};
+
+			// Asignar evento al botón de cancelar eliminar en la modal
+			const cancelarEliminarBtn = document.getElementById(
+				"cancelarEliminarCat"
+			);
+			cancelarEliminarBtn.onclick = function () {
+				// Ocultar la modal
+				modal.classList.add("hidden");
+			};
 		});
 	});
 };

@@ -36,4 +36,3 @@ const arrayCategorias = JSON.parse(localStorage.getItem("categorias")) || [
 		ganancia: 0,
 	},
 ];
-console.log("arrayCategorias");
