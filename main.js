@@ -323,8 +323,8 @@ const agregarCategoria = () => {
 		const index = arrayCategorias.findIndex(
 			(cat) => cat.id === categoriaEditandoId
 		);
-		arrayCategorias[index].nombre = nombreCategoria; // Actualizar el nombre de la categoría
-		categoriaEditandoId = null; // Reiniciar el ID de la categoría que se está editando
+		arrayCategorias[index].nombre = nombreCategoria;
+		categoriaEditandoId = null;
 	} else {
 		// Si no hay un ID de categoría guardado, estamos agregando una nueva categoría
 		const nuevaCategoria = {
@@ -398,7 +398,7 @@ function filtrarPorCategoria() {
 	const filasTabla = document.querySelectorAll("#table-body div");
 
 	filasTabla.forEach((fila) => {
-		const categoriaElemento = fila.querySelector("div:nth-child(2)"); // Utilizar div:nth-child(2) para el segundo div
+		const categoriaElemento = fila.querySelector("div:nth-child(2)");
 		if (categoriaElemento) {
 			const categoria = categoriaElemento.textContent;
 
@@ -424,7 +424,7 @@ function filtroPorTipo() {
 	const filasTabla = document.querySelectorAll("#table-body div");
 
 	filasTabla.forEach((fila) => {
-		const tipoElemento = fila.querySelector("div:nth-child(1)"); // Utilizar div:nth-child(2) para el segundo div
+		const tipoElemento = fila.querySelector("div:nth-child(1)");
 		if (tipoElemento) {
 			const tipo = tipoElemento.textContent;
 
@@ -444,18 +444,14 @@ const filtroTipoSelect = document.getElementById("filtro-tipo");
 
 // Agregar evento de cambio al select
 filtroTipoSelect.addEventListener("change", function () {
-	// Obtener el valor seleccionado
 	const tipoSeleccionado = filtroTipoSelect.value;
 
-	// Obtener referencia al campo de monto
 	const montoInput = document.getElementById("amount");
 
 	// Asignar el valor adecuado al campo de monto
 	if (tipoSeleccionado === "Gasto") {
-		// Si se selecciona "Gasto", asignar un valor menor a 0
 		montoInput.value = "-0";
 	} else if (tipoSeleccionado === "Ganancia") {
-		// Si se selecciona "Ganancia", asignar un valor mayor a 0
 		montoInput.value = "0";
 	}
 });
